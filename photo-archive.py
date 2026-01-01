@@ -83,7 +83,7 @@ def main():
                 get_date_taken(path, raise_on_error=True)
             except Exception as e:
                 errors.append(f"{file}: {
-                              e}\n\t\t->if run with -f date will be {get_date_taken(path, raise_on_error=False)}")
+                              e}->if run with -f date will be {get_date_taken(path, raise_on_error=False)}")
 
     if errors:
         print("\nexceptions found during scan:")

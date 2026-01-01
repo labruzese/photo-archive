@@ -103,8 +103,9 @@ def main():
     print("=" * 60)
 
     for src, dst, date in planned_operations:
-        # Show relative path for dest to make it readable, or full if preferred
-        print(f"[{date.strftime('%Y-%m-%d')}] {os.path.basename(src)} -> {dst}")
+        rel_src = os.path.relpath(src, source)
+        rel_dst = os.path.relpath(dst, dest)
+        print(f"[{date.strftime('%Y-%m-%d')}] {rel_src} -> {rel_dst}")
 
     print("=" * 60)
 
@@ -135,9 +136,9 @@ def main():
                 continue
 
         try:
-            shutil.copy2(src, dst)
+            new_loc = shutil.copy2(src, dst)
             print(f"copied ({
-                success_count}/{len(planned_operations)}): {os.path.basename(src)} -> {dest}")
+                success_count}/{len(planned_operations)}): {os.path.basename(src)} -> {new_loc}")
             success_count += 1
         except Exception as e:
             print(f"error copying {src} -> {dst}: {e}")

@@ -130,7 +130,7 @@ def main():
             try:
                 shutil.copy2(source_path, target_path)
                 print(
-                    f"copied {count}/{num_files}: ({date_obj.strftime("%B %dd %Y")}) {file} -> {target_path}")
+                    f"copied {count}/{num_files}: ({date_obj.strftime("%B %d %Y")}) {file} -> {target_path}")
                 count += 1
             except Exception as e:
                 print(f"error copying {file}: {e}")

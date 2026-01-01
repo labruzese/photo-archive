@@ -53,14 +53,9 @@ def main():
     if "-f" in sys.argv:
         force = True
         sys.argv.remove("-f")
-    if len(sys.argv) == 1:
-        source = os.getcwd()
-        dest = "D:\\Pictures"
-        force = True
-    if len(sys.argv) == 2:
-        source = os.getcwd()
-        dest = "D:\\Pictures"
-        force = True
+    if "-d" in sys.argv:
+        dry_run = True
+        sys.argv.remove("-d")
     if len(sys.argv) < 3:
         print("Usage: python script.py <source_dir> <dest_dir> [prefix] [-f]")
         sys.exit(1)
@@ -97,7 +92,12 @@ def main():
         else:
             print("\n-f flag detected. proceeding despite errors...")
 
-    print(f"found {num_files} files, proceeding to copy")
+    print(f"found {num_files} files")
+    if dry_run:
+        sys.exit(0)
+
+    print("proceeding to copy")
+
     # Create destination if it doesn't exist
     if not os.path.exists(dest):
         os.makedirs(dest)

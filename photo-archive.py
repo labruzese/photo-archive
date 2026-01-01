@@ -2,14 +2,14 @@ import os
 import sys
 import shutil
 import datetime
-import exifread
+from PIL import Image
 
 
 def get_date_taken(path, raise_on_error=False):
     try:
-        file = open(path, 'rb')
+        img = Image.open(path)
         # 36867 is the EXIF tag for DateTimeOriginal
-        exif_data = exifread.process_file(file)
+        exif_data = img._getexif()
         if exif_data:
             date_str = exif_data.get(36867)
             if date_str:

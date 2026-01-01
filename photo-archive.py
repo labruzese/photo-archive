@@ -18,7 +18,7 @@ def get_date_taken(path, raise_on_error=False):
                     return datetime.datetime.strptime(date_str, "%Y:%m:%d %H:%M:%S")
                 except ValueError:
                     print(f"datetime metadata not in expected format: failed to parse {
-                          date_str} into %Y:%m:%d %H:%M:%S for {path}\n\t\t->if run with -f date will be {datetime.fromtimestamp(os.path.getmtime(path)).strftime('%Y-%m-%d %H:%M:%S')}")
+                          date_str} into %Y:%m:%d %H:%M:%S")
     except Exception as e:
         if raise_on_error:
             raise e
@@ -82,7 +82,8 @@ def main():
                 # Attempt to read with strict error raising
                 get_date_taken(path, raise_on_error=True)
             except Exception as e:
-                errors.append(f"{file}: {e}")
+                errors.append(f"{file}: {
+                              e}\n\t\t->if run with -f date will be {get_date_taken(path, raise_on_error=False)}")
 
     if errors:
         print("\nexceptions found during scan:")
@@ -128,7 +129,8 @@ def main():
 
             try:
                 shutil.copy2(source_path, target_path)
-                print(f"copied {count}/{num_files}: {file} -> {target_path}")
+                print(
+                    f"copied {count}/{num_files}: ({date_obj.strftime("%B %dd %Y")}) {file} -> {target_path}")
                 count += 1
             except Exception as e:
                 print(f"error copying {file}: {e}")
